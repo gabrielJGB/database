@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase.js"></script>
+    <title>Notes Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Rubik';
+        }
+
+        .navbar {
+            z-index: 3;
+            background-color: rgb(12, 118, 118);
+            color: white;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar-content {
+            width: 80%;
+            margin: auto;
+            height: 10vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 24px;
+        }
+
+        .table-title {
+            font-weight: 100;
+            font-size: 30px;
+            margin-bottom: 20px;
+            ;
+        }
+
+
+        .navbar-buttons {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            gap: 20px
+        }
+
+        .log-out {
+            padding: 8px 10px;
+            border: 0;
+            background-color: rgb(231, 17, 17);
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .log-out:hover {
+            background-color: rgb(233, 36, 36);
+        }
+
+        .user:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+            font-size: 17px;
+            padding: 10px;
+            align-items: center;
+            height: 90vh;
+            width: 200px;
+            background-color: rgba(184, 184, 184, 0.411);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+        }
+
+        .add-box {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .add-box input {
+            padding: 5px;
+            border: solid 1px gray;
+            border-radius: 3px;
+        }
+
+        .add-box button {
+            height: 40px;
+            width: 40px;
+            border-radius: 20px;
+            border: 0;
+            cursor: pointer;
+            outline: none;
+            font-size: 20px;
+            background-color: rgb(65, 65, 65);
+            color: white
+        }
+
+        .add-box button:hover {
+            background-color: rgb(82, 82, 82);
+        }
+
+        .table {
+            border: solid 1px gray;
+            border-radius: 5px;
+            background-color: rgb(71, 71, 71);
+        }
+
+        .edit,
+        .delete {
+            padding: 0 20px;
+            border: solid 1px rgb(71, 71, 71);
+            background-color: white;
+        }
+
+        .first,
+        .last {
+            padding: 0;
+            border: solid 1px rgb(71, 71, 71);
+            background-color: white;
+        }
+
+        .first input,
+        .last input {
+            text-align: center;
+            outline: none;
+            padding: 0;
+            width: max-content;
+            border: 0;
+            font-size: 17px;
+        }
+
+        .input-data:disabled {
+            color: black;
+        }
+
+        .input-data {
+            background-color: transparent;
+        }
+
+        .edit-button,
+        .delete-button {
+            width: 100%;
+            height: 100%;
+
+            cursor: pointer;
+            padding: 8px;
+            color: white;
+            outline: none;
+        }
+
+        .edit-button {
+            background-color: rgb(27, 140, 253);
+        }
+
+        .edit-button:hover {
+            background-color: rgb(0, 128, 255);
+        }
+
+        .delete-button {
+            background-color: rgb(235, 12, 12);
+        }
+
+        .delete-button:hover {
+            background-color: rgb(255, 0, 0);
+        }
+
+        .loading {
+            color: white
+        }
+
+        @media all and (max-width:700px) {
+            .sidebar {
+                display: none;
+            }
+
+            .navbar-content {
+                width: 100%;
+                flex-direction: column;
+                row-gap: 10px;
+            }
+
+            .navbar {
+                height: 13vh;
+            }
+
+            .add-box {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .edit-button,
+            .delete-button {
+                width: auto;
+                padding: 8px 5px;
+            }
+
+            .edit,
+            .delete {
+                padding: 0;
+            }
+            .first input, .last input {
+                font-size:16px;
+                width:18vh
+            }
+            .add-box input{
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="navbar-content">
+            <a href="./index.html">
+                <div class="title">&#9998 Notes manager</div>
+            </a>
+            <div class="navbar-buttons">
+                <div class="user">
+
+                </div>
+                <button class="log-out">
+                    Cerrar sesión
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div>Crear tabla</div>
+            <div>Tabla 1</div>
+            <div>Tabla 2</div>
+            <div>Tabla 3</div>
+            <div>Tabla 4</div>
+        </div>
+
+        <div class="content">
+            <div class="table-title">Tabla 1</div>
+            <div class="add-box">
+                <input id="first-input" type="text" placeholder="Nombre">
+                <input id="last-input" type="text" placeholder="Apellido">
+                <button class="add-button">+</button>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="first">Nombre</th>
+                        <th class="last">Apellido</th>
+                        <th class="edit">Editar</th>
+                        <th class="delete">Borrar</th>
+                    </tr>
+                </thead>
+                <tbody class="table-content">
+                    <td class="loading">Cargando tabla...</td>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+    <script src="./src/main.js"></script>
+</body>
+
+</html>
