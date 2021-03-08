@@ -107,7 +107,7 @@ a {
     border: 0;
     cursor: pointer;
     outline: none;
-    font-size: 20px;
+    font-size: 17px;
     background-color: rgb(65, 65, 65);
     color: white
 }
@@ -204,7 +204,9 @@ a {
         flex-direction: column;
         align-items: center;
     }
-
+    .content{
+        margin:20px 0;
+    }
     .edit-button,
     .delete-button {
         width: auto;
@@ -217,7 +219,7 @@ a {
     }
     .first input, .last input {
         font-size:16px;
-        width:18vh
+        width:16vh
     }
     .add-box input{
         font-size: 18px;
